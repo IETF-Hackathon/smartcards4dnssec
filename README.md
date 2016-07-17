@@ -9,10 +9,9 @@ The result is essentially an intermediate PKCS11 "driver" that satisfies PKCS11 
 
 The hope of this effort is to simplify the integration of low-cost smartcards into DNSSEC deployments and encourage greater experimentation with PKCS11 compatible devices.
 
+#DOIT
 
-# cd pkcs11/zones
-# sudo bash
-# . setenv
+
 export PKCS11_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so
 pkcs11-tool -l --keypairgen --key-type EC:prime256v1 --label ecc256key
 pkcs11-tool -O
