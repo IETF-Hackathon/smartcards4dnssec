@@ -10,6 +10,22 @@ The result is essentially an intermediate PKCS11 "driver" that satisfies PKCS11 
 The hope of this effort is to simplify the integration of low-cost smartcards into DNSSEC deployments and encourage greater experimentation with PKCS11 compatible devices.
 
 
+# cd pkcs11/zones
+# sudo bash
+# . setenv
+export PKCS11_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so
+pkcs11-tool -l --keypairgen --key-type EC:prime256v1 --label ecc256key
+pkcs11-tool -O
+cc -Icryptoki -fPIC -c rlpkcs11sc.c
+cc -shared -Wl,-soname,librlpkcs11sc.so -o librlpkcs11sc.so rlpkcs11sc.o -lssl -lcrypto
+echo -n "123456" > mypin
+
+dnssec-keyfromlabel-pkcs11 -E ./librlpkcs11sc.so -l "pkcs11:object=ecc256key;pin-source=mypin" -a ECDSAP256SHA256 -f KSK hx.cds.zx.com
+
+cat hx.cds.zx.com.0 Khx.cds.zx.com.+013+60565.key > hx.cds.zx.com
+
+dnssec-signzone-pkcs11 -E ./librlpkcs11sc.so -n 1 -x -z -o hx.cds.zx.com -k Khx.cds.zx.com.+013+60565 hx.cds.zx.com
+
 
 
   
