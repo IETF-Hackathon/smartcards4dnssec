@@ -13,10 +13,15 @@ The hope of this effort is to simplify the integration of low-cost smartcards in
 
 
 export PKCS11_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so
+
 pkcs11-tool -l --keypairgen --key-type EC:prime256v1 --label ecc256key
+
 pkcs11-tool -O
+
 cc -Icryptoki -fPIC -c rlpkcs11sc.c
+
 cc -shared -Wl,-soname,librlpkcs11sc.so -o librlpkcs11sc.so rlpkcs11sc.o -lssl -lcrypto
+
 echo -n "123456" > mypin
 
 dnssec-keyfromlabel-pkcs11 -E ./librlpkcs11sc.so -l "pkcs11:object=ecc256key;pin-source=mypin" -a ECDSAP256SHA256 -f KSK hx.cds.zx.com
