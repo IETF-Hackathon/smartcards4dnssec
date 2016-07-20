@@ -1,3 +1,7 @@
+# Update
+
+I understand that this effort has spurred the BIND folk toward the long term ideal of out-of-the-box support for smartcards.  EXCELLENT!  Thank you ISC.
+
 # smartcards4dnssec
 Code to allow stock BIND to use smartcards
 
