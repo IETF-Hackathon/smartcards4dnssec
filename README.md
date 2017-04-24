@@ -1,7 +1,3 @@
-# Update
-
-I understand that this effort has spurred the BIND folk toward the long term ideal of out-of-the-box support for smartcards.  EXCELLENT!  Thank you ISC.
-
 # smartcards4dnssec
 Code to allow stock BIND to use smartcards
 
@@ -33,6 +29,10 @@ dnssec-keyfromlabel-pkcs11 -E ./librlpkcs11sc.so -l "pkcs11:object=ecc256key;pin
 cat hx.cds.zx.com.0 Khx.cds.zx.com.+013+60565.key > hx.cds.zx.com
 
 dnssec-signzone-pkcs11 -E ./librlpkcs11sc.so -n 1 -x -z -o hx.cds.zx.com -k Khx.cds.zx.com.+013+60565 hx.cds.zx.com
+
+# Update
+
+I understand that this effort has spurred the BIND folk toward the long term ideal of out-of-the-box support for smartcards.  EXCELLENT!  Thank you ISC.
 
 
 
